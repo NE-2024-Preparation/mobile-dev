@@ -13,7 +13,7 @@ import {
 import facebookImg from "../../assets/images/facebook.png";
 import googleImg from "../../assets/images/google.png";
 
-import CustomButton from "@/components/buttons/CustomButton";
+import { Button } from "@/components/elements/button";
 
 const Login = () => {
   return (
@@ -62,10 +62,7 @@ const Login = () => {
             </View>
           </View>
           <View className='flex w-full items-center py-4'>
-            <CustomButton
-              onPress={() => router.push("/search")}
-              content='Sign In'
-            />
+            <Button onPress={() => router.push("/search")} content='Sign In' />
           </View>
           <View className='w-full flex-row justify-center items-center pb-4'>
             <View className='h-[1px] mr-4 w-[40%] bg-third' />

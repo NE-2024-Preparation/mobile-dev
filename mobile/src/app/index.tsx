@@ -1,10 +1,10 @@
 import { router } from "expo-router";
+import { useEffect } from "react";
 import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
   Text,
-  Image,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,15 +13,16 @@ import steak from "@/assets/images/steak.jpg";
 
 const App = () => {
   return (
-    <SafeAreaView className='h-full'>
+    <SafeAreaView className='h-full bg-primary'>
       <ScrollView
         contentContainerStyle={{
           height: "100%",
           display: "flex",
           position: "relative"
         }}
+        className='h-full w-full'
       >
-        <ImageBackground source={steak}>
+        <ImageBackground source={steak} className='h-full w-full'>
           <View
             className='h-full w-full'
             style={{

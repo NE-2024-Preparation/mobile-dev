@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 
-import CustomButton from "@/components/buttons/CustomButton";
+import { Button } from "@/components/elements/button";
 
 const SearchScreen = () => {
   return (
@@ -40,7 +40,7 @@ const SearchScreen = () => {
           </TouchableWithoutFeedback>
         </View>
         <View className='mt-6 w-full'>
-          <CustomButton content='Go Back' onPress={() => router.back()} />
+          <Button content='Go Back' onPress={() => router.back()} />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -13,7 +13,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import CustomButton from "@/components/buttons/CustomButton";
+import { Button } from "@/components/elements/button";
 
 const Signup = () => {
   return (
@@ -69,20 +69,14 @@ const Signup = () => {
             </View>
           </View>
           <View className='flex w-full items-center py-4'>
-            <CustomButton
-              onPress={() => router.push("/search")}
-              content='Proceed'
-            />
+            <Button onPress={() => router.push("/search")} content='Proceed' />
           </View>
           <Text className='text-third font-bold mt-4'>OR</Text>
           <Text className='text-third py-1 font-bold'>
             Already have an account?
           </Text>
           <View className='flex w-full items-center py-4'>
-            <CustomButton
-              onPress={() => router.push("/login")}
-              content='Sign In'
-            />
+            <Button onPress={() => router.push("/login")} content='Sign In' />
           </View>
         </View>
       </ScrollView>
