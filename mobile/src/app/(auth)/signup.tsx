@@ -1,9 +1,9 @@
 import {
   FontAwesome,
-  FontAwesome5,
-  MaterialCommunityIcons
+  MaterialCommunityIcons,
+  MaterialIcons
 } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { Formik } from "formik";
 import { Text, View, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
@@ -14,15 +14,19 @@ import { AuthRegisterRequestPayload } from "@/types/auth";
 
 const SignupScreen = () => {
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required("Full Name is required"),
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().required("Phone Number is required")
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required")
   });
 
   const initialValues: AuthRegisterRequestPayload = {
-    fullName: "Patrick",
     email: "",
-    phoneNumber: ""
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: ""
   };
 
   const handleSubmit = (data: AuthRegisterRequestPayload) => {
@@ -45,6 +49,7 @@ const SignupScreen = () => {
       <View className='flex flex-col items-center gap-2 py-5'>
         <Text className='font-bold text-secondary text-lg'>Create Account</Text>
       </View>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -61,46 +66,75 @@ const SignupScreen = () => {
         }) => (
           <>
             <TextInput
+              onChangeText={handleChange("firstName")}
+              onBlur={handleBlur("firstName")}
+              value={values.firstName}
+              error={touched.firstName ? errors.firstName : ""}
+              placeholder='First Name'
+              icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
+            />
+
+            <TextInput
+              onChangeText={handleChange("lastName")}
+              onBlur={handleBlur("lastName")}
+              value={values.lastName}
+              error={touched.lastName ? errors.lastName : ""}
+              placeholder='Last Name'
+              icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
+            />
+
+            <TextInput
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
               value={values.email}
               error={touched.email ? errors.email : ""}
               placeholder='Email'
-              icon={<FontAwesome5 name='envelope' size={24} color='black' />}
+              icon={
+                <MaterialCommunityIcons
+                  name='email-outline'
+                  size={18}
+                  color='#b1b6c8'
+                />
+              }
             />
 
             <TextInput
-              onChangeText={handleChange("fullName")}
-              onBlur={handleBlur("fullName")}
-              value={values.fullName}
-              error={touched.fullName ? errors.fullName : ""}
-              placeholder='Full Name'
-              icon={<FontAwesome name='user-o' size={24} color='black' />}
+              onChangeText={handleChange("username")}
+              onBlur={handleBlur("username")}
+              value={values.username}
+              error={touched.username ? errors.username : ""}
+              placeholder='Username'
+              icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
             />
 
             <TextInput
-              onChangeText={handleChange("phoneNumber")}
-              onBlur={handleBlur("phoneNumber")}
-              value={values.phoneNumber}
-              error={touched.phoneNumber ? errors.phoneNumber : ""}
-              placeholder='Phone Number'
-              icon={<FontAwesome5 name='phone-alt' size={24} color='black' />}
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
+              value={values.password}
+              error={touched.password ? errors.password : ""}
+              placeholder='Password'
+              isSecret={true}
+              icon={
+                <MaterialIcons name='lock-outline' size={18} color='#b1b6c8' />
+              }
             />
 
             <Button
               disabled={!isValid}
-              title='Submit'
+              title='Sign Up'
               onPress={() => handleSubmit()}
             />
           </>
         )}
       </Formik>
 
-      <Text className='text-third py-1 font-bold'>
-        Already have an account?
-      </Text>
-      <View className='flex w-full items-center py-4'>
-        <Button onPress={() => router.push("/login")} title='Log In' />
+      <View className='flex flex-col items-center pt-5'>
+        <Text className='text-third mt-2'>
+          Already have an account?{" "}
+          <Link href='/(auth)/login' className='text-primary font-bold'>
+            Log In
+          </Link>
+        </Text>
       </View>
     </View>
   );

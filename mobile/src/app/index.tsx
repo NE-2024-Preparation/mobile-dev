@@ -1,10 +1,21 @@
 import { router } from "expo-router";
+import { useEffect } from "react";
 import { ImageBackground, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 import steak from "@/assets/images/steak.jpg";
 import { Button } from "@/components/elements/button";
+import { RootState } from "@/types/redux";
 
 const App = () => {
+  const { userData } = useSelector((state: RootState) => state.user);
+  const { tokensData } = useSelector((state: RootState) => state.tokens);
+
+  useEffect(() => {
+    console.log("userData", userData);
+    console.log("tokensData", tokensData);
+  }, []);
+
   return (
     <View className='h-full w-full'>
       <ImageBackground source={steak} className='h-full w-full'>
@@ -25,7 +36,7 @@ const App = () => {
             </Text>
             <Button
               title='Continue'
-              onPress={() => router.push("/(auth)/signup")}
+              onPress={() => router.push("/(auth)/login")}
             />
           </View>
         </View>

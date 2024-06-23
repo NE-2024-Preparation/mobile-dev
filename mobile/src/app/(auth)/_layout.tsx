@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const AuthLayout = () => {
   return (
@@ -12,6 +11,30 @@ const AuthLayout = () => {
       />
       <Stack.Screen
         name='signup'
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='reset-password'
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='reset-password-verification-code'
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='reset-password-confirmed'
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='reset-password-success'
         options={{
           headerShown: false
         }}

@@ -1,30 +1,35 @@
-import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  MaterialIcons
-} from "@expo/vector-icons";
-import { router, Link } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Formik } from "formik";
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 
 import { Button } from "@/components/elements/button";
 import { TextInput } from "@/components/elements/input";
-import { AuthLoginRequestPayload } from "@/types/auth";
 
-const Login = () => {
+export type ResetPasswordPayload = {
+  password: string;
+  confirm_password: string;
+};
+
+const ResetPasswordConfirmed = () => {
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Email or Username is required"),
-    password: Yup.string().required("Password is required")
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Short password"),
+    confirm_password: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm Password is required")
   });
 
-  const initialValues: AuthLoginRequestPayload = {
-    username: "",
-    password: ""
+  const initialValues: ResetPasswordPayload = {
+    password: "",
+    confirm_password: ""
   };
 
-  const handleSubmit = (data: AuthLoginRequestPayload) => {
+  const handleSubmit = (data: ResetPasswordPayload) => {
     console.log(data);
+    router.push("/(auth)/reset-password-success");
   };
 
   return (
@@ -47,7 +52,7 @@ const Login = () => {
         </TouchableOpacity>
         <View className='flex flex-col items-center gap-2 py-5'>
           <Text className='font-bold text-secondary text-lg'>
-            Sign In to Continue
+            Reset Password
           </Text>
         </View>
         <Formik
@@ -66,58 +71,36 @@ const Login = () => {
           }) => (
             <>
               <TextInput
-                onChangeText={handleChange("username")}
-                onBlur={handleBlur("username")}
-                value={values.username}
-                error={touched.username ? errors.username : ""}
-                placeholder='First Name'
-                icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
-              />
-
-              <TextInput
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
                 value={values.password}
                 error={touched.password ? errors.password : ""}
                 placeholder='Password'
+                icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
                 isSecret={true}
-                icon={
-                  <MaterialIcons
-                    name='lock-outline'
-                    size={18}
-                    color='#b1b6c8'
-                  />
-                }
+              />
+
+              <TextInput
+                onChangeText={handleChange("confirm_password")}
+                onBlur={handleBlur("confirm_password")}
+                value={values.confirm_password}
+                error={touched.confirm_password ? errors.confirm_password : ""}
+                placeholder='Confirm Password'
+                icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
+                isSecret={true}
               />
 
               <Button
                 disabled={!isValid}
-                title='Sign In'
+                title='Submit'
                 onPress={() => handleSubmit()}
               />
             </>
           )}
         </Formik>
-        <View className='flex flex-col items-center pt-5 gap-4'>
-          <Text className='text-third mt-2'>
-            Don't have an account?{" "}
-            <Link href='/(auth)/signup' className='text-primary font-bold'>
-              Register
-            </Link>
-          </Text>
-          <Text className='text-third mt-2'>
-            Forgot Password?{" "}
-            <Link
-              href='/(auth)/reset-password'
-              className='text-primary font-bold'
-            >
-              Reset
-            </Link>
-          </Text>
-        </View>
       </View>
     </ScrollView>
   );
 };
 
-export default Login;
+export default ResetPasswordConfirmed;

@@ -1,8 +1,4 @@
-import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  MaterialIcons
-} from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { router, Link } from "expo-router";
 import { Formik } from "formik";
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
@@ -10,21 +6,22 @@ import * as Yup from "yup";
 
 import { Button } from "@/components/elements/button";
 import { TextInput } from "@/components/elements/input";
-import { AuthLoginRequestPayload } from "@/types/auth";
+import { AuthRequestResetPasswordRequestPayload } from "@/types/auth";
 
-const Login = () => {
+const ResetPassword = () => {
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Email or Username is required"),
-    password: Yup.string().required("Password is required")
+    email: Yup.string()
+      .required("Password is required")
+      .email("Invalid email address")
   });
 
-  const initialValues: AuthLoginRequestPayload = {
-    username: "",
-    password: ""
+  const initialValues: AuthRequestResetPasswordRequestPayload = {
+    email: ""
   };
 
-  const handleSubmit = (data: AuthLoginRequestPayload) => {
+  const handleSubmit = (data: AuthRequestResetPasswordRequestPayload) => {
     console.log(data);
+    router.push("/(auth)/reset-password-verification-code");
   };
 
   return (
@@ -47,7 +44,7 @@ const Login = () => {
         </TouchableOpacity>
         <View className='flex flex-col items-center gap-2 py-5'>
           <Text className='font-bold text-secondary text-lg'>
-            Sign In to Continue
+            Reset Password
           </Text>
         </View>
         <Formik
@@ -66,33 +63,17 @@ const Login = () => {
           }) => (
             <>
               <TextInput
-                onChangeText={handleChange("username")}
-                onBlur={handleBlur("username")}
-                value={values.username}
-                error={touched.username ? errors.username : ""}
-                placeholder='First Name'
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                error={touched.email ? errors.email : ""}
+                placeholder='Email'
                 icon={<FontAwesome name='user-o' size={18} color='#b1b6c8' />}
-              />
-
-              <TextInput
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-                error={touched.password ? errors.password : ""}
-                placeholder='Password'
-                isSecret={true}
-                icon={
-                  <MaterialIcons
-                    name='lock-outline'
-                    size={18}
-                    color='#b1b6c8'
-                  />
-                }
               />
 
               <Button
                 disabled={!isValid}
-                title='Sign In'
+                title='Submit'
                 onPress={() => handleSubmit()}
               />
             </>
@@ -105,19 +86,10 @@ const Login = () => {
               Register
             </Link>
           </Text>
-          <Text className='text-third mt-2'>
-            Forgot Password?{" "}
-            <Link
-              href='/(auth)/reset-password'
-              className='text-primary font-bold'
-            >
-              Reset
-            </Link>
-          </Text>
         </View>
       </View>
     </ScrollView>
   );
 };
 
-export default Login;
+export default ResetPassword;
