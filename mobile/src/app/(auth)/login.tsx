@@ -1,15 +1,17 @@
-import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  MaterialIcons
-} from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { router, Link } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
+import { login_user } from "@/api/auth";
 import { Button } from "@/components/elements/button";
 import { TextInput } from "@/components/elements/input";
+import { CustomError } from "@/libs";
+import { addTokensRedux } from "@/redux/slices/tokensSlice";
+import { adduserRedux } from "@/redux/slices/userSlice";
 import { AuthLoginRequestPayload } from "@/types/auth";
 
 const Login = () => {
@@ -17,14 +19,29 @@ const Login = () => {
     username: Yup.string().required("Email or Username is required"),
     password: Yup.string().required("Password is required")
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const initialValues: AuthLoginRequestPayload = {
     username: "",
     password: ""
   };
 
-  const handleSubmit = (data: AuthLoginRequestPayload) => {
-    console.log(data);
+  const handleSubmit = async (payload: AuthLoginRequestPayload) => {
+    try {
+      setError("");
+      setIsLoading(true);
+      const data = await login_user(payload);
+      const { tokens, user } = data.payload;
+      dispatch(adduserRedux(user));
+      dispatch(addTokensRedux(tokens));
+      router.push("/(tabs)/menu");
+    } catch (error: any) {
+      if (error instanceof CustomError) setError(error.response.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -90,7 +107,12 @@ const Login = () => {
                 }
               />
 
+              <View className='w-full py-2'>
+                <Text className='text-red-500'>{error}</Text>
+              </View>
+
               <Button
+                isLoading={isLoading}
                 disabled={!isValid}
                 title='Sign In'
                 onPress={() => handleSubmit()}

@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useEffect } from "react";
 import { ImageBackground, Text, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -15,6 +15,8 @@ const App = () => {
     console.log("userData", userData);
     console.log("tokensData", tokensData);
   }, []);
+
+  if (userData && tokensData) return <Redirect href='/(tabs)/menu' />;
 
   return (
     <View className='h-full w-full'>

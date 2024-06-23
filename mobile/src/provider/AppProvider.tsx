@@ -3,11 +3,12 @@ import {
   DefaultTheme,
   ThemeProvider
 } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   TouchableWithoutFeedback,
   Keyboard,
-  useColorScheme
+  useColorScheme,
+  LogBox
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
@@ -24,6 +25,10 @@ export default function AppProvider(props: AppProviderProps) {
   const { children } = props;
   const colorScheme = useColorScheme();
   const color = useThemeColor("background");
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["API request error"]);
+  }, []);
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
