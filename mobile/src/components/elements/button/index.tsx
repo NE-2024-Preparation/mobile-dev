@@ -1,17 +1,18 @@
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
 
-type ButtonProps = {
-  content: string;
-  onPress: () => void;
+type ButtonProps = TouchableOpacityProps & {
+  title: string;
 };
 
-export const Button = ({ content, onPress }: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
+  const { title, onPress } = props;
   return (
     <TouchableOpacity
       onPress={onPress}
       className='bg-primary rounded-md w-full justify-center items-center min-h-[50px]'
+      {...props}
     >
-      <Text className='text-white font-bold'>{content}</Text>
+      <Text className='text-white font-bold'>{title}</Text>
     </TouchableOpacity>
   );
 };

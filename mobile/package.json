@@ -21,6 +21,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-native-fontawesome": "^0.3.0",
+    "@hookform/resolvers": "^3.6.0",
     "@react-navigation/native": "^6.0.2",
     "@tailwindcss/typography": "^0.5.13",
     "autoprefixer": "^10.4.19",
@@ -34,10 +35,12 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.6",
     "expo-web-browser": "~13.0.3",
+    "formik": "^2.4.6",
     "jwt-decode": "^4.0.0",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.52.0",
     "react-native": "0.74.2",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-reanimated": "~3.10.1",
@@ -46,6 +49,7 @@
     "react-native-svg": "15.2.0",
     "react-native-vector-icons": "^10.1.0",
     "react-native-web": "^0.19.11",
+    "yup": "^1.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

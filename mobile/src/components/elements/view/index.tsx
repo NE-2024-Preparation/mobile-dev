@@ -9,10 +9,10 @@ export type BlurViewProps = ThemeProps & DefaultBlurView["props"];
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
 
-  const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "background"
-  );
+  const backgroundColor = useThemeColor("background", {
+    light: lightColor,
+    dark: darkColor
+  });
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
@@ -20,10 +20,10 @@ export function View(props: ViewProps) {
 export const BlurView = (props: BlurViewProps) => {
   const { style, lightColor, darkColor, ...otherProps } = props;
 
-  const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
-    "background"
-  );
+  const backgroundColor = useThemeColor("background", {
+    light: lightColor,
+    dark: darkColor
+  });
 
   return (
     <DefaultBlurView style={[{ backgroundColor }, style]} {...otherProps} />

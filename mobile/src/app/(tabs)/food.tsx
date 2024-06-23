@@ -45,32 +45,30 @@ const food = () => {
     }
   ];
   return (
-    <SafeAreaView className='h-full pt-12'>
-      <ScrollView
-        contentContainerStyle={{
-          height: "100%",
-          paddingBottom: 50
-        }}
-      >
-        <View className='w-full flex-row border-b border-[#10104721] pl-4 pb-2 items-center'>
-          <TouchableOpacity
-            className='p-2 bg-[#1010470e] rounded-sm'
-            onPress={() => router.back()}
-          >
-            <Entypo name='chevron-small-left' size={28} color='#f7941d' />
-          </TouchableOpacity>
-          <TextInput placeholder='Search...' className='flex-1 ml-5 p-2' />
-        </View>
-        <View className='px-5 py-3'>
-          <Text className='text-primary font-bold'>Popular Food 🍕</Text>
-          <ScrollView className='py-3' showsVerticalScrollIndicator={false}>
-            {foodInfo.map((item, index) => (
-              <TopFood key={index} image={item.image} name={item.name} />
-            ))}
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView
+      contentContainerStyle={{
+        height: "100%",
+        paddingBottom: 50
+      }}
+    >
+      <View className='w-full flex-row border-b border-[#10104721] pl-4 pb-2 items-center'>
+        <TouchableOpacity
+          className='p-2 bg-[#1010470e] rounded-sm'
+          onPress={() => router.back()}
+        >
+          <Entypo name='chevron-small-left' size={28} color='#f7941d' />
+        </TouchableOpacity>
+        <TextInput placeholder='Search...' className='flex-1 ml-5 p-2' />
+      </View>
+      <View className='px-5 py-3'>
+        <Text className='text-primary font-bold'>Popular Food 🍕</Text>
+        <ScrollView className='py-3' showsVerticalScrollIndicator={false}>
+          {foodInfo.map((item, index) => (
+            <TopFood key={index} image={item.image} name={item.name} />
+          ))}
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
